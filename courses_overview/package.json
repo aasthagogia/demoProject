@@ -1,16 +1,17 @@
 {
-  "name": "courses_overview",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "react": "^16.4.2",
-    "react-dom": "^16.4.2",
-    "react-scripts": "1.1.4"
-  },
+  "name": "example-create-react-app-express",
+  "version": "1.0.0",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "client": "cd client && yarn start",
+    "server": "nodemon server.js",
+    "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\""
+  },
+  "dependencies": {
+    "express": "^4.16.2",
+    "joi": "^13.5.2",
+    "yarn": "^1.9.4"
+  },
+  "devDependencies": {
+    "concurrently": "^3.5.0"
   }
 }

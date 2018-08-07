@@ -3,12 +3,14 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 let courses = [
-    {id: 1, name: 'course1'},
-    {id: 2, name: 'course2'},
-    {id: 3, name: 'course3'}
+    {id: 1, name: 'course1', details: 'the selected course is Course 1.'},
+    {id: 2, name: 'course2', details: 'the selected course is Course 2.'},
+    {id: 3, name: 'course3', details: 'the selected course is Course 3.'}
 ];
 
 app.use(bodyParser.urlencoded({extended:true}));
+// express doesn't give the
+// response body in form of Json, so to do that we use body parser
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
@@ -19,6 +21,12 @@ app.get('/api/courses/:id', (req, res) => {
     const course = courses.find(course =>  course.id === parseInt(req.params.id));
     if(!course) res.status(404).send('Course not found.');
     res.send(course);
+});
+
+app.get('/api/courses', (req, res) => {
+    // const course = courses.find(course =>  course.id === parseInt(req.params.id));
+    // if(!course) res.status(404).send('Course not found.');
+    res.send(courses);
 });
 
 app.post('/api/courses', (req, res) => {
@@ -40,7 +48,7 @@ app.post('/api/courses', (req, res) => {
     res.send(course);
 });
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 app.listen(port, () => {
     console.log(`Listening at port ${port}...`);
 });
