@@ -21,6 +21,11 @@ jobs:
     steps:
       - checkout
 
+      - run:
+          name: Setup Environment Variables
+          command: |
+            echo 'export PATH="$CIRCLE_BRANCH/bin:$PATH"' >> $BASH_ENV
+            echo 'export GIT_SHA1="$CIRCLE_SHA1"' >> $BASH_ENV
       # Download and cache dependencies
       - restore_cache:
           keys:
