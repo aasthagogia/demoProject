@@ -1,14 +1,15 @@
 import React from 'react';
 // import Auxillary from '../../hoc/auxillary';
-import  './Course.css';
+import  './Course.sass';
+// import Simple from '../Cards/Simple';
 
 const course = (props) => (
     <div className="Course" onClick={props.clicked}>
     <div>
-        <label>Id : </label>{props.id}
+        <label>Name : </label>{props.name}
     </div>
     <div>
-        <label>Name : </label>{props.name}
+        <label>Author:  </label>{props.author}
     </div>
     </div>
 );

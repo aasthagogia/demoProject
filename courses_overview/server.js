@@ -1,52 +1,53 @@
+// const startupDebugger = require('debug')('app:startup');
+// const config= require('config');
+// const morgan = require('morgan');
+// const pug = require('pug');
+// app.set('view engine', 'pug');
+// app.set('views', './views');
+
 const Joi = require('joi');
 const express = require('express');
 const app = express();
-const bodyParser = require('body-parser');
-let courses = [
-    {id: 1, name: 'course1', details: 'the selected course is Course 1.'},
-    {id: 2, name: 'course2', details: 'the selected course is Course 2.'},
-    {id: 3, name: 'course3', details: 'the selected course is Course 3.'}
-];
+const course = require('./routes/courses');
+const root = require('./routes/root');
 
-app.use(bodyParser.urlencoded({extended:true}));
-// express doesn't give the
-// response body in form of Json, so to do that we use body parser
-app.use(bodyParser.json());
+app.use(express.json());
+app.use('/api/courses', course);
+app.use('/', root);
 
-app.get('/', (req, res) => {
-    res.send('Hello World!');
-});
+// if(app.get('env') === 'development'){
+//     app.use(morgan('tiny'));
+//     startupDebugger('development mode on.')
+// }
+// console.log('calling get user');
+// async function callingAsync(){
+//     const user = await getUser(1);
+//     console.log(user);
+//     console.log('calling get repos');
+//     const repositories = await getRepositories(12);
+//     console.log(repositories);
+// }
 
-app.get('/api/courses/:id', (req, res) => {
-    const course = courses.find(course =>  course.id === parseInt(req.params.id));
-    if(!course) res.status(404).send('Course not found.');
-    res.send(course);
-});
+// callingAsync();
 
-app.get('/api/courses', (req, res) => {
-    // const course = courses.find(course =>  course.id === parseInt(req.params.id));
-    // if(!course) res.status(404).send('Course not found.');
-    res.send(courses);
-});
+// function getUser(id){
+//     return new Promise((resolve, reject) => {
+//         setTimeout(()=>{
+//             console.log('fetching the data from databse');
+//             resolve({id: id, name: 'aastha'});
+//         }, 2000);
+//     })
+   
+// }
 
-app.post('/api/courses', (req, res) => {
-    const schema ={
-        name: Joi.string().min(3).required()
-    };
-
-    const result = Joi.validate(req.body, schema);
-    console.log(result);
-
-    if(result.error){
-        res.status(400).send(result.error);
-    }
-    const course = {
-        id: courses.length + 1,
-        name: req.body.name
-    };
-    courses.push(course);
-    res.send(course);
-});
+// function getRepositories(id){
+//     return new Promise((resolve, reject) => {
+//         setTimeout(() =>{
+//             resolve(['repo1', 'repo2', 'repo3']);
+//         }, 2000);
+//     })
+    
+// }
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {

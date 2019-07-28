@@ -1,0 +1,6 @@
+{
+    "name": "Production Mode",
+    "mail": {
+        "host": "prod-server"
+    }
+}
