@@ -9,8 +9,8 @@ jobs:
       # specify the version you desire here
       - image: circleci/node:8.10
 
-    environment:
-      DATABASE_URL: postgres${CIRCLE_BRANCH}
+    # environment:
+      # DATABASE_URL: postgres${CIRCLE_BRANCH}
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
       # documented at https://circleci.com/docs/2.0/circleci-images/
@@ -24,8 +24,8 @@ jobs:
       - run:
           name: Setup Environment Variables
           command: |
-            echo 'export PATH="$CIRCLE_BRANCH"' >> $BASH_ENV
-            # echo 'export GIT_SHA1="$CIRCLE_SHA1"' >> $BASH_ENV
+            echo 'export PATH="$GOPATH/bin:$PATH"' >> $BASH_ENV
+            echo 'export DATABASE_URL="$CIRCLE_BRANCH"' >> $BASH_ENV
       # Download and cache dependencies
       - restore_cache:
           keys:
@@ -33,7 +33,7 @@ jobs:
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
 
-      - run: npm install && echo ${DATABASE_URL} && echo ${BASH_ENV}
+      - run: npm install && echo ${DATABASE_URL} 
 
       - save_cache:
           paths:
